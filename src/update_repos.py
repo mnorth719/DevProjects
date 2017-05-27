@@ -1,13 +1,14 @@
 import requests
-from models.repos import CodeRepository
-import datetime
+from models.repos import GithubRepository
 
-def acquire_github_repositories(username):
+
+
+def acquire_github_repositories(username) -> [GithubRepository]:
     r = requests.get('https://api.github.com/users/{}/repos'.format(username))
     repos = []
     for item in r.json():
         try:
-            repos.append(CodeRepository(item))
+            repos.append(GithubRepository(item))
         except ValueError:
             print("Error parsing repository")
 
@@ -17,7 +18,12 @@ def acquire_github_repositories(username):
 # The difference being - if someone is simply importing this module to use its functionality
 # It won't run what's below.
 if __name__ == "__main__":
+    from database.repositories import Actions as db_actions
+    from database.manager import check_db_exists
+
     # Test purposes
-    repositories = acquire_github_repositories("thingdeux")
+    check_db_exists()
+    repositories: [GithubRepository] = acquire_github_repositories("thingdeux")
+
     for repository in repositories:
-        print(repository.owner.login)
+        db_actions.insert_new_code_repo(repository)

@@ -2,12 +2,15 @@
 Models for Github.com's API
 """
 
-from sqlalchemy import Column, Integer, String
-from sqlalchemy.ext.declarative import declarative_base
+from abc import ABC
 
-Base = declarative_base()
 
-class User(Base):
+# ABC = Abstract Base Class
+class RepoStorable(ABC):
+    pass
+
+
+class User:
     def __init__(self, dictionary):
         if isinstance(dictionary, dict):
             self.id = dictionary.get('id', None)
@@ -17,7 +20,7 @@ class User(Base):
             raise ValueError
 
 
-class CodeRepository(Base):
+class GithubRepository(RepoStorable):
     def __init__(self, dictionary):
         if isinstance(dictionary, dict):
             self.id = dictionary.get('id', None)
@@ -32,3 +35,8 @@ class CodeRepository(Base):
                 self.owner = None
         else:
             raise ValueError
+
+# TODO: Fill out this class
+class BitbucketRepository(RepoStorable):
+    def __init__(self):
+        pass

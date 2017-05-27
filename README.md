@@ -1,16 +1,19 @@
 # DevProjects
+
 A website for showcasing your projects
 
-### Setup Instructions
+### Structure
 
-* Step 1. Determined by web host ... TBD
+* **/src** - Python Source Files for Backend
+* **/static** - CSS/JS/Static HTML
+* **/templates** - HTML Templates
 
-* Step 2. Place the following in your crontab
+### Deployment Instructions
 
+1. Determined by web host ... TBD
+2. Place the following in your servers cron
 ```
 */45 * * * * /path/to/python3 /path/to/update_repos.py
 ```
-
-* Step 3. Verify the database file has been written /src/database/
-
-Step 4. 
+3. Verify the database file has been written /src/database/
+4. ... etc

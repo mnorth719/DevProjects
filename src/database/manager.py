@@ -6,5 +6,32 @@
 
 
 from sqlalchemy import create_engine
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import sessionmaker
+from sqlalchemy.exc import OperationalError as SQLError
+from sqlite3 import OperationalError as SQLiteError
+import os
 
-db_engine = create_engine('sqlite:///:memory:')
+# Path to Root of Repository
+DB_LOCATION = os.path.dirname(os.path.dirname(__file__))
+_engine = create_engine('sqlite:////{db_location}/{db_name}'.format(db_location=DB_LOCATION, db_name='app.db'))
+_Session = sessionmaker(bind=_engine)
+_Base = declarative_base()
+
+def base_model():
+    return _Base
+
+def get_session():
+    return _Session()
+
+def check_db_exists():
+    # Inner import - prevent cyclic redundancy
+    from database.models.repository import Repository
+
+    try:
+        repository_count = get_session().query(Repository).count()
+        print("Found {} Stored Repositories".format(repository_count))
+    # TODO: Fix this - don't catch everythign
+    except Exception:
+        _Base.metadata.create_all(_engine)
+        print("Creating Engine")
