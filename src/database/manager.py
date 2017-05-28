@@ -34,8 +34,8 @@ def check_db_exists():
         repository_count = get_session().query(Repository).count()
         print("Found {} Stored Repositories".format(repository_count))
         tracker_count = get_session().query(ETagTracker).count()
-        print("Found {} Trackers".format(repository_count))
-        appstate = get_session().query(AppState).count()
+        print("Found {} Trackers".format(tracker_count))
+        get_session().query(AppState).count()
     # TODO: Fix this - don't catch everything
     except Exception:
         _Base.metadata.create_all(_engine)
