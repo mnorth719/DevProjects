@@ -1,6 +1,6 @@
 import requests
 from models.repos import GithubRepository
-
+from sqlalchemy.exc import IntegrityError as SQLIntegrityError
 
 
 def acquire_github_repositories(username) -> [GithubRepository]:
@@ -26,4 +26,7 @@ if __name__ == "__main__":
     repositories: [GithubRepository] = acquire_github_repositories("thingdeux")
 
     for repository in repositories:
-        db_actions.insert_new_code_repo(repository)
+        try:
+            db_actions.insert_new_code_repo(repository)
+        except SQLIntegrityError as e:
+            db_actions.update_code_repo(repository)

@@ -32,7 +32,7 @@ def check_db_exists():
     try:
         repository_count = get_session().query(Repository).count()
         print("Found {} Stored Repositories".format(repository_count))
-    # TODO: Fix this - don't catch everythign
+    # TODO: Fix this - don't catch everything
     except Exception:
         _Base.metadata.create_all(_engine)
         print("Creating Engine")

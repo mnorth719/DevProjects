@@ -5,7 +5,8 @@
 import database.manager as db_manager
 from database.models.repository import Repository
 from models.repos import GithubRepository, BitbucketRepository, RepoStorable
-from abc import ABC
+from dateutil.parser import parse as date_parser
+
 
 class Actions:
 
@@ -24,17 +25,26 @@ class Actions:
     def update_code_repo(code_repo: RepoStorable):
         # Query repo (by Id) and update its value on the DB.
         if isinstance(code_repo, GithubRepository):
-            repo_to_update = Actions.get_code_repo(code_repo.id).one_or_none()
-            if repo_to_update:
-                repo_to_update.name = code_repo.name
-                repo_to_update.description = code_repo.description
-                repo_to_update.url = code_repo.url
-                repo_to_update.created_date = code_repo.created_date
-                repo_to_update.last_updated = code_repo.last_updated
+            try:
+                session = db_manager.get_session()
+                repo = session.query(Repository).filter(Repository.id == code_repo.id).one_or_none()
+                if repo:
+                    # If attributes are not filled out on the updating code repository, use the currently
+                    # stored attribute as a fallback.
+                    repo.name = code_repo.name or repo.name
+                    repo.description = code_repo.description or repo.description
+                    repo.api_url = code_repo.api_url or repo.url
+                    repo.site_url = code_repo.site_url or repo.site_url
 
-                # TODO: TODAY Every bad person
-                # Action.get_code_repo =
+                    created_date = date_parser(code_repo.created_date)
+                    last_updated = date_parser(code_repo.last_updated)
+                    repo.created_date = created_date or repo.created_date
+                    repo.last_updated = last_updated or repo.last_updated
 
+                    session.commit()
+                    print("Updated code repo {}".format(code_repo.id))
+            except AttributeError as e:
+                print("Unable to update repository - missing attribute: {}".format(e))
 
     @staticmethod
     def delete_code_repo(repo_id: int):
@@ -47,11 +57,20 @@ class Actions:
         session = db_manager.get_session()
         return session.filter(Repository.id == repo_id)
 
-
     # Private Methods
     @staticmethod
     def _map_github_repo_to_orm_object(repo: GithubRepository) -> Repository:
-        if repo.id and repo.name and repo.url:
-            return Repository(id=repo.id, name=repo.name, url=repo.url)
+        if repo.id and repo.name and repo.site_url:
+            repo_to_return = Repository(id=repo.id, name=repo.name, site_url=repo.site_url,
+                                         api_url=repo.api_url, description=repo.description)
+
+            if repo.created_date:
+                parsed_created = date_parser(repo.created_date)
+                repo_to_return.created_date = parsed_created
+            if repo.last_updated:
+                parsed_last_updated = date_parser(repo.last_updated)
+                repo_to_return.last_updated = parsed_last_updated
+
+            return repo_to_return
         else:
             return None

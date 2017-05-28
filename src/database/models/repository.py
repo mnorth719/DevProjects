@@ -9,12 +9,17 @@ from sqlalchemy import Column, Integer, String, DateTime, Boolean
 class Repository(base_model()):
     __tablename__ = 'repositories'
 
+    # API VALUES
     id = Column(Integer, primary_key=True)
     name = Column(String(255))
-    nickname = Column(String(255))
     description = Column(String)
-    url = Column(String)
+    api_url = Column(String)    # Api URL to access the repo api detail page
+    site_url = Column(String)   # Browser Url
     created_date = Column(DateTime)
     last_updated = Column(DateTime)
-    should_display = Column(Boolean)
-    is_private = Column(Boolean)
+
+
+    # CUSTOM VALUES
+    nickname = Column(String(255))      # Allow for a custom nickname to be set on the repo.
+    should_display = Column(Boolean)    # Allow the repo to be hidden on the site
+    is_private = Column(Boolean)    # Flag for whether or not the repo is private
