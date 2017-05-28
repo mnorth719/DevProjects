@@ -28,10 +28,14 @@ def get_session():
 def check_db_exists():
     # Inner import - prevent cyclic redundancy
     from database.models.repository import Repository
+    from database.models.environment import ETagTracker, AppState
 
     try:
         repository_count = get_session().query(Repository).count()
         print("Found {} Stored Repositories".format(repository_count))
+        tracker_count = get_session().query(ETagTracker).count()
+        print("Found {} Trackers".format(repository_count))
+        appstate = get_session().query(AppState).count()
     # TODO: Fix this - don't catch everything
     except Exception:
         _Base.metadata.create_all(_engine)

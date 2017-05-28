@@ -1,0 +1,15 @@
+# Ideas / Feature brainstorming
+
+Want the ability to be able to 'group' multiple repos. by Site_URL and have them show up as one entry.
+    ex:
+        "groups": {
+            "electronicsProjects": [
+                "https://github.com/asjs",
+                "https://github.com/asadasd"
+            ]
+        }
+
+This would generate one 'tile' on the finished site named 'electronicsProjects' and all of the repos would show up
+under it.
+
+

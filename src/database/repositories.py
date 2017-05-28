@@ -19,8 +19,8 @@ class Actions:
                     session = db_manager.get_session()
                     session.add(github_db_object)
                     session.commit()
-            except AttributeError:
-                print("Unable to save Github Repo Object - missing required attributes")
+            except AttributeError as e:
+                print("Unable to save Github Repo Object - missing required attributes: {}".format(e))
         elif isinstance(code_repo, BitbucketRepository):
             raise NotImplemented
 
