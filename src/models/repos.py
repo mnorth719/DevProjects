@@ -27,7 +27,7 @@ class GithubRepository(RepoStorable):
             self.name = dictionary.get('name', None)
             self.description = dictionary.get('description', None)
             self.api_url = dictionary.get('url', None)
-            self.site_url = dictionary.get('svn_url', None)
+            self.site_url = dictionary.get('html_url', None)
             self.created_date = dictionary.get('created_at', None)
             self.last_updated = dictionary.get('updated_at', None)
             try:

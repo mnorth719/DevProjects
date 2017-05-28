@@ -73,6 +73,7 @@ class Actions:
             repo_to_return = Repository(id=repo.id, name=repo.name, site_url=repo.site_url,
                                          api_url=repo.api_url, description=repo.description)
 
+            repo_to_return.repo_type = Repository.GITHUB_TYPE
             if repo.created_date:
                 parsed_created = date_parser(repo.created_date)
                 repo_to_return.created_date = parsed_created
