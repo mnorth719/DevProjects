@@ -1,4 +1,13 @@
-import requests
+"""
+Models for Github.com's API
+"""
+
+from abc import ABC
+
+
+# ABC = Abstract Base Class
+class RepoStorable(ABC):
+    pass
 
 
 class User:
@@ -6,11 +15,12 @@ class User:
         if isinstance(dictionary, dict):
             self.id = dictionary.get('id', None)
             self.login = dictionary.get('login', None)
+            self.avatar_url = dictionary.get('avatar_url', None)
         else:
             raise ValueError
 
 
-class CodeRepository:
+class GithubRepository(RepoStorable):
     def __init__(self, dictionary):
         if isinstance(dictionary, dict):
             self.id = dictionary.get('id', None)
@@ -19,18 +29,14 @@ class CodeRepository:
             self.url = dictionary.get('url', None)
             self.created_date = dictionary.get('created_at', None)
             self.last_updated = dictionary.get('updated_at', None)
-            self.owner = User(dictionary.get('owner', None))
+            try:
+                self.owner = User(dictionary.get('owner', None))
+            except ValueError:
+                self.owner = None
         else:
             raise ValueError
 
-
-r = requests.get('https://api.github.com/users/mnorth719/repos')
-repos = []
-for item in r.json():
-    try:
-        repos.append(CodeRepository(item))
-    except ValueError:
-        print("Error parsing repository")
-
-for repo in repos:
-    print(repo.name or "None")
+# TODO: Fill out this class
+class BitbucketRepository(RepoStorable):
+    def __init__(self):
+        pass
