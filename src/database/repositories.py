@@ -13,11 +13,14 @@ class Actions:
     @staticmethod
     def insert_new_code_repo(code_repo: RepoStorable):
         if isinstance(code_repo, GithubRepository):
-            github_db_object = Actions._map_github_repo_to_orm_object(code_repo)
-            if github_db_object:
-                session = db_manager.get_session()
-                session.add(github_db_object)
-                session.commit()
+            try:
+                github_db_object = Actions._map_github_repo_to_orm_object(code_repo)
+                if github_db_object:
+                    session = db_manager.get_session()
+                    session.add(github_db_object)
+                    session.commit()
+            except AttributeError:
+                print("Unable to save Github Repo Object - missing required attributes")
         elif isinstance(code_repo, BitbucketRepository):
             raise NotImplemented
 
@@ -60,6 +63,12 @@ class Actions:
     # Private Methods
     @staticmethod
     def _map_github_repo_to_orm_object(repo: GithubRepository) -> Repository:
+        """
+        Take a API GithubRepository class object and convert it into a DB Repository object
+
+        :param repo: GithubRepository (API Object)
+        :return: Repository
+        """
         if repo.id and repo.name and repo.site_url:
             repo_to_return = Repository(id=repo.id, name=repo.name, site_url=repo.site_url,
                                          api_url=repo.api_url, description=repo.description)
@@ -73,4 +82,4 @@ class Actions:
 
             return repo_to_return
         else:
-            return None
+            raise AttributeError
