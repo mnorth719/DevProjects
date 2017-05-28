@@ -13,7 +13,7 @@ from sqlite3 import OperationalError as SQLiteError
 import os
 
 # Path to Root of Repository
-DB_LOCATION = os.path.dirname(os.path.dirname(__file__))
+DB_LOCATION = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
 _engine = create_engine('sqlite:////{db_location}/{db_name}'.format(db_location=DB_LOCATION, db_name='app.db'))
 _Session = sessionmaker(bind=_engine)
 _Base = declarative_base()

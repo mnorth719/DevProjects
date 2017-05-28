@@ -19,5 +19,5 @@ class ETagTracker(base_model()):
     __tablename__ = 'etag_trackers'
 
     id = Column(Integer, primary_key=True, autoincrement=True)
-    url = Column(String, index=True)
-    etag = Column(String(255))
+    url = Column(String, index=True) # ex: https://api.github.com/users/thingdeux/repos
+    etag = Column(String(255))  # ex: d5d20d65e73e060c51275d8b0e3a480b
