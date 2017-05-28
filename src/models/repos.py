@@ -26,7 +26,8 @@ class GithubRepository(RepoStorable):
             self.id = dictionary.get('id', None)
             self.name = dictionary.get('name', None)
             self.description = dictionary.get('description', None)
-            self.url = dictionary.get('url', None)
+            self.api_url = dictionary.get('url', None)
+            self.site_url = dictionary.get('html_url', None)
             self.created_date = dictionary.get('created_at', None)
             self.last_updated = dictionary.get('updated_at', None)
             try:
@@ -35,6 +36,7 @@ class GithubRepository(RepoStorable):
                 self.owner = None
         else:
             raise ValueError
+
 
 # TODO: Fill out this class
 class BitbucketRepository(RepoStorable):

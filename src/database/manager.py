@@ -18,6 +18,7 @@ _engine = create_engine('sqlite:////{db_location}/{db_name}'.format(db_location=
 _Session = sessionmaker(bind=_engine)
 _Base = declarative_base()
 
+
 def base_model():
     return _Base
 
@@ -27,11 +28,15 @@ def get_session():
 def check_db_exists():
     # Inner import - prevent cyclic redundancy
     from database.models.repository import Repository
+    from database.models.environment import ETagTracker, AppState
 
     try:
         repository_count = get_session().query(Repository).count()
         print("Found {} Stored Repositories".format(repository_count))
-    # TODO: Fix this - don't catch everythign
+        tracker_count = get_session().query(ETagTracker).count()
+        print("Found {} Trackers".format(tracker_count))
+        get_session().query(AppState).count()
+    # TODO: Fix this - don't catch everything
     except Exception:
         _Base.metadata.create_all(_engine)
         print("Creating Engine")
