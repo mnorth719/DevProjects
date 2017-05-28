@@ -18,6 +18,7 @@ _engine = create_engine('sqlite:////{db_location}/{db_name}'.format(db_location=
 _Session = sessionmaker(bind=_engine)
 _Base = declarative_base()
 
+
 def base_model():
     return _Base
 
