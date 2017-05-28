@@ -84,3 +84,9 @@ class Actions:
             return repo_to_return
         else:
             raise AttributeError
+
+    @staticmethod
+    def get_all_repositories() -> [Repository]:
+        session = db_manager.get_session()
+        results = session.query(Repository).all()
+        return results
