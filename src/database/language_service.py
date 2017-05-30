@@ -9,7 +9,7 @@ class Actions:
     def get_languages_for_repo(repo_id: int) -> [Language]:
         if isinstance(repo_id, int):
             session = db_manager.get_session()
-            languages = session.query(Language).filter(Language.repo_id == repo_id).one_or_none()
+            languages = session.query(Language).filter(Language.repo_id == repo_id)
             return languages
         else:
             raise ValueError
