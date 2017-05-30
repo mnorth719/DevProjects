@@ -18,6 +18,7 @@ def acquire_github_repositories(username) -> [GithubRepository]:
 
     return repos
 
+
 def acquire_bitbucket_repositories(username):
     pass
 

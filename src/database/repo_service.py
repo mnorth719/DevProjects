@@ -6,6 +6,8 @@ import database.manager as db_manager
 from database.models.repository import Repository
 from models.repos import GithubRepository, BitbucketRepository, RepoStorable
 from dateutil.parser import parse as date_parser
+from database.language_service import Actions as ls_actions
+from database.models.language import Language
 
 
 class Actions:
@@ -17,6 +19,13 @@ class Actions:
                 github_db_object = Actions._map_github_repo_to_orm_object(code_repo)
                 if github_db_object:
                     session = db_manager.get_session()
+
+                    # TODO dont hardcode this to all languages
+                    languages = session.query(Language).all()
+
+                    for language in languages:
+                        github_db_object.languages.append(language)
+
                     session.add(github_db_object)
                     session.commit()
             except AttributeError as e:
@@ -51,7 +60,7 @@ class Actions:
 
     @staticmethod
     def delete_code_repo(repo_id: int):
-        # Delete repostiroy stored locally
+        # Delete repository stored locally
         raise NotImplemented
 
     @staticmethod
