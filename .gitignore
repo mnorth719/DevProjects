@@ -1,3 +1,4 @@
 .idea/
 *.db
 *.pyc
+static/node_modules
