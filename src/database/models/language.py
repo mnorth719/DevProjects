@@ -20,5 +20,5 @@ class Language(base_model()):
 
     id = Column(Integer, primary_key=True)
     textColor = Column(String(255))
-    name = Column(String(255))
+    name = Column(String(255), unique=True)
     repositories = relationship("Repository", secondary=repo_language_table, back_populates="languages")

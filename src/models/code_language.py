@@ -11,10 +11,7 @@ class LanguageStorable(ABC):
 
 
 class CodeLanguage(LanguageStorable):
-    def __init__(self, dictionary):
-        if isinstance(dictionary, dict):
-            self.id = dictionary.get('id', None)
-            self.name = dictionary.get('name', None)
-            self.textColor = dictionary.get('textColor', None)
-        else:
-            raise ValueError
+    def __init__(self, dictionary: dict):
+        self.id = dictionary.get('id', None)
+        self.name = dictionary.get('name', None)
+        self.textColor = dictionary.get('textColor', None)
