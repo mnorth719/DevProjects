@@ -13,7 +13,7 @@ from sqlite3 import OperationalError as SQLiteError
 import os
 
 # Path to Root of Repository
-DB_LOCATION = os.path.dirname(os.path.dirname(__file__))
+DB_LOCATION = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
 _engine = create_engine('sqlite:////{db_location}/{db_name}'.format(db_location=DB_LOCATION, db_name='app.db'))
 _Session = sessionmaker(bind=_engine)
 _Base = declarative_base()
@@ -39,4 +39,23 @@ def check_db_exists():
     # TODO: Fix this - don't catch everything
     except Exception:
         _Base.metadata.create_all(_engine)
+        _populate_languages_table()
         print("Creating Engine")
+
+
+def _populate_languages_table():
+
+    from models.code_language import CodeLanguage
+    from database.language_service import Actions as ls_actions
+
+    # TODO pull this from somewhere instead of hard coding
+    test_dict = {
+        "name": "swift",
+        "id": 12345,
+        "textColor": "#ff0000"
+    }
+
+    language = CodeLanguage(test_dict)
+    ls_actions.insert_new_language(language)
+
+

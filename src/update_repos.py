@@ -18,6 +18,7 @@ def acquire_github_repositories(username) -> [GithubRepository]:
 
     return repos
 
+
 def acquire_bitbucket_repositories(username):
     pass
 
@@ -26,12 +27,12 @@ def acquire_bitbucket_repositories(username):
 # The difference being - if someone is simply importing this module to use its functionality
 # It won't run what's below.
 if __name__ == "__main__":
-    from database.repositories import Actions as db_actions
+    from database.repo_service import Actions as db_actions
     from database.manager import check_db_exists
 
     # Test purposes
     check_db_exists()
-    repositories: [GithubRepository] = acquire_github_repositories("thingdeux")
+    repositories: [GithubRepository] = acquire_github_repositories("mnorth719")
 
     for repository in repositories:
         try:
