@@ -196,6 +196,16 @@ section.success {
   margin: 0 0 15px;
   right: 0;
 }
+#img_box{
+ width:90%;
+ height:90%;
+}
+.resize_horizontal{
+ width:100%;
+}
+.resize_vertical{
+ height:100%;
+}
 #portfolio .portfolio-item .portfolio-link {
   display: block;
   position: relative;
@@ -225,12 +235,19 @@ section.success {
   margin-top: -12px;
   color: white;
 }
+#portfolio .p {
+    font-size: 14px;
+}
 #portfolio .portfolio-item .portfolio-link .caption .caption-content i {
   margin-top: -12px;
 }
 #portfolio .portfolio-item .portfolio-link .caption .caption-content h3,
 #portfolio .portfolio-item .portfolio-link .caption .caption-content h4 {
   margin: 0;
+}
+#portfolio .portfolio-item {
+    max-width: 100%;
+    max-height: 100%;
 }
 #portfolio * {
   z-index: 2;

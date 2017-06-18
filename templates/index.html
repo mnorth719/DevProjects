@@ -42,7 +42,7 @@
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
                     <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
                 </button>
-                <a class="navbar-brand" href="#page-top">Start Bootstrap</a>
+                <a class="navbar-brand" href="#page-top">MattKit</a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
@@ -92,11 +92,18 @@
                     <hr class="star-primary">
                 </div>
             </div>
-            <div class="row">            
-                <div class="col-sm-4 portfolio-item">
-                    <a class="portfolio-link" data-toggle="modal">
-                    </a>
-                </div>                
+            <div class="row">
+                {% for repo in repos %}
+                    <div class="col-md-4 portfolio-item">
+                        <div id="img_box">
+                            <!--<img src="{{ url_for('static', filename='img/github.png') }}" class="resize_horizontal">-->
+                            <h4>{{repo.name}}</h4>
+                            <br>
+                            <p>{{repo.description}}</p>
+                            <br>
+                        </div>
+                    </div>
+                {% endfor %}
             </div>
         </div>
     </section>

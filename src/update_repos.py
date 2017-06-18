@@ -32,7 +32,7 @@ if __name__ == "__main__":
 
     # Test purposes
     check_db_exists()
-    repositories: [GithubRepository] = acquire_github_repositories("thingdeux")
+    repositories: [GithubRepository] = acquire_github_repositories("mnorth719")
 
     for repository in repositories:
         try:

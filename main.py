@@ -7,9 +7,9 @@ app = Flask(__name__, template_folder=template_location, static_url_path='/stati
 
 
 @app.route("/")
-def hello():
+def index():
     repos = repo_service.Actions.get_all_repositories()
-    return render_template('index.html')
+    return render_template('index.html', repos=repos)
 
 
 if __name__ == "__main__":
