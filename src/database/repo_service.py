@@ -96,6 +96,7 @@ class Actions:
 
     @staticmethod
     def get_all_repositories() -> [Repository]:
+        db_manager.check_db_exists()
         session = db_manager.get_session()
         results = session.query(Repository).all()
         return results

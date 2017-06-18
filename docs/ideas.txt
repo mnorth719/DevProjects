@@ -11,3 +11,5 @@ Want the ability to be able to 'group' multiple repos. by Site_URL and have them
 
 This would generate one 'tile' on the finished site named 'electronicsProjects' and all of the repos would show up
 under it.
+
+add favicon

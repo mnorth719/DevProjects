@@ -1,3 +1,5 @@
+#!/usr/bin/env python3.6
+
 import requests
 from models.repos import GithubRepository
 from sqlalchemy.exc import IntegrityError as SQLIntegrityError
